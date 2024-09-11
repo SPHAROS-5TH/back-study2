@@ -13,5 +13,4 @@ public class ResponseGetProductVo {
     private Long id;
     private String productName;
 //    private int price;
-
 }

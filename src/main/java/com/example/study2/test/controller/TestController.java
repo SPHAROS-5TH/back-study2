@@ -28,6 +28,8 @@ public class TestController {
     @PostMapping("/product")
     public ResponseCreateProductVo createProduct(@RequestBody RequestCreateProductVo requestCreateProductVo) {
 
+
+
         return testService.createProduct(RequestCreateProductDto.toDto(requestCreateProductVo)).toVo();
     }
 

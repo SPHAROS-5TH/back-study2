@@ -1,5 +1,7 @@
 package com.example.study2.test.service;
 
+import com.example.study2.common.exception.CustomException;
+import com.example.study2.common.exception.ErrorCode;
 import com.example.study2.test.entity.Product;
 import com.example.study2.test.repository.TestRepository;
 import com.example.study2.test.vo.RequestCreateProductDto;
@@ -9,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.metadata.IIOInvalidTreeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +24,15 @@ public class TestService {
     @Transactional
     public Product getProduct(Long productId) {
 
-        // db에서 데이터를 조회
-        Product result = testRepository.findById(productId).get();
-        // 우리 비지니스 로직
+        Product result = testRepository.findById(productId).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+        );
 
 
         return result;
     }
 
+    @Transactional
     public ResponseCreateProductDto createProduct(RequestCreateProductDto requestProductDto) {
 
         return ResponseCreateProductDto.toDto(testRepository.save(requestProductDto.toEntity()));
