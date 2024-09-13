@@ -2,7 +2,10 @@ package com.example.study2.test.service;
 
 import com.example.study2.common.exception.CustomException;
 import com.example.study2.common.exception.ErrorCode;
+import com.example.study2.test.dto.SearchProductRequestDto;
+import com.example.study2.test.dto.SearchProductResponseDto;
 import com.example.study2.test.entity.Product;
+import com.example.study2.test.repository.ProductQueryDslRepository;
 import com.example.study2.test.repository.TestRepository;
 import com.example.study2.test.vo.RequestCreateProductDto;
 import com.example.study2.test.vo.ResponseCreateProductDto;
@@ -20,6 +23,7 @@ import java.util.List;
 public class TestService {
 
     private final TestRepository testRepository;
+    private final ProductQueryDslRepository productQueryDslRepository;
 
     @Transactional
     public Product getProduct(Long productId) {
@@ -47,5 +51,9 @@ public class TestService {
 
         return testRepository.findAll().stream().map(ResponseGetProductDto::toDto).toList();
 
+    }
+
+    public List<SearchProductResponseDto> searchProduct(SearchProductRequestDto searchProductRequestDto) {
+        return  productQueryDslRepository.searchProduct(searchProductRequestDto).stream().map(SearchProductResponseDto::toDto).toList();
     }
 }

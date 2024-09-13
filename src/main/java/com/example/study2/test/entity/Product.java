@@ -16,5 +16,6 @@ public class Product {
     @Column(nullable = false)
     private String name;
     private int price;
+    private String category;
 
 }
